@@ -155,9 +155,7 @@ function irAlFormulario(evento) {
   window.location.href = "#inicio";
 }
 
-/* ----------------------------------------
-   DESCARGA DE PDF DESDE GITHUB RAW
------------------------------------------ */
+/* DESCARGA DE PDF DESDE DOS REPOSITORIOS */
 document.getElementById("searchForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -170,33 +168,37 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
     return;
   }
 
-  // Usuario y repositorio correctos
-  const usuario = "Stillmaster88";
-  const repositorio = "santotomun2025";
+  // Repositorios que contienen certificados del MISMO evento
+  const repositorios = [
+    "santotomun2025",        // repo principal
+    "santotomun2025-extra"   // repo secundario
+  ];
 
-  // ❗ ESTA LÍNEA ESTABA MAL, ahora está corregida:
-  const pdfUrl = `https://stillmaster88.github.io/santotomun2025/${cedula}.pdf`;
+  // Función que prueba repos uno por uno
+  function buscarEnRepositorio(index) {
+    if (index >= repositorios.length) {
+      document.getElementById("resultado").innerHTML =
+        "<p style='color:red;'>No se encontró un certificado con esa cédula.</p>";
+      return;
+    }
 
-  fetch(pdfUrl)
-    .then(response => {
+    const pdfUrl = `https://stillmaster88.github.io/${repositorios[index]}/${cedula}.pdf`;
+
+    fetch(pdfUrl).then(response => {
       if (response.ok) {
         window.open(pdfUrl, "_blank");
         document.getElementById("resultado").innerHTML =
-          "<p style='color:green;'>Visualizando certificado...</p>";
+          "<p style='color:green;'>Descargando certificado...</p>";
       } else {
-        document.getElementById("resultado").innerHTML =
-          "<p style='color:red;'>No se encontró un certificado con esa cédula.</p>";
+        buscarEnRepositorio(index + 1); // probar siguiente repo
       }
     })
     .catch(() => {
-      document.getElementById("resultado").innerHTML =
-        "<p style='color:red;'>Error al buscar el certificado.</p>";
+      buscarEnRepositorio(index + 1); // si hay error, sigue buscando
     });
+  }
+
+  // Inicia la búsqueda en el primer repositorio
+  buscarEnRepositorio(0);
 });
-</script>
-
-</body>
-</html>
-
-
 
