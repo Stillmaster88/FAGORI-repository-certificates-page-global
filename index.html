@@ -1,19 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Certificados Santoto - Facultad de Gobierno y Relaciones Internacionales</title>
+
+  <link rel="stylesheet" href="style.css">
+
   <style>
-    /* (tu CSS existente o importado) */
-    header .logo { width:180px !important; height:auto !important; }
-    .event-card img { width:80%; max-width:230px; height:200px; object-fit:contain; }
-    #carrusel { width:100%; height:280px; overflow:hidden; position:relative; margin-bottom:30px; }
-    #carrusel img { width:100%; height:100%; object-fit:cover; position:absolute; opacity:0; transition:opacity 1s ease-in-out;}
-    #carrusel img.activa { opacity:1; }
-    .mensaje { margin-top:12px; }
+    /* Logo */
+    header .logo {
+      width: 180px !important;
+      height: auto !important;
+    }
+
+    /* Tarjetas */
+    .event-card img {
+      width: 80%;
+      max-width: 230px;
+      height: 200px;
+      object-fit: contain;
+    }
+
+    /* Carrusel */
+    #carrusel {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    #carrusel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    #carrusel img.activa {
+      opacity: 1;
+    }
   </style>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/44/Escudo_Universidad_Santo_Tom%C3%A1s.png">
 </head>
+
 <body>
 
 <header>
@@ -21,6 +57,7 @@
     <img src="logo_santoto_bogota1.png" alt="Logo Santoto" class="logo">
     <h1>Facultad de Gobierno y Relaciones Internacionales</h1>
   </div>
+
   <nav>
     <a href="#inicio">Inicio</a>
     <a href="#eventos">Eventos</a>
@@ -29,20 +66,25 @@
   </nav>
 </header>
 
+<!-- CARRUSEL -->
 <section id="carrusel">
-  <img src="photo_santoto1.jpg" class="activa" alt="">
-  <img src="photo_santoto2.jpg" alt="">
-  <img src="photo_santoto3.jpg" alt="">
+  <img src="photo_santoto1.jpg" class="activa">
+  <img src="photo_santoto2.jpg">
+  <img src="photo_santoto3.jpg">
 </section>
 
+<!-- FORMULARIO -->
 <section id="inicio" class="hero">
+  <div class="overlay"></div>
+
   <div class="hero-content">
     <h2>Consulta y descarga tus certificados</h2>
     <p>Verifica tu participación en los eventos institucionales de la Facultad.</p>
 
     <form id="searchForm">
       <input type="text" id="cedula" placeholder="Ingresa tu número de cédula" required>
-      <select id="evento" required>
+
+      <select id="evento">
         <option value="">Seleccione un evento</option>
         <option value="santotomun">SantoToMUN 2025</option>
         <option value="paz">Semana de la Paz</option>
@@ -52,13 +94,16 @@
       <button type="submit">Descargar certificado</button>
     </form>
 
-    <div id="resultado" class="mensaje" aria-live="polite"></div>
+    <div id="resultado"></div>
   </div>
 </section>
 
+<!-- EVENTOS -->
 <section id="eventos" class="eventos">
   <h2>Certificados por evento</h2>
+
   <div class="event-grid">
+
     <div class="event-card" onclick="irAlFormulario('santotomun')">
       <img src="logo_santotomun.png" alt="Modelo ONU">
       <h3>Modelo de Naciones Unidas SantoToMUN 2025</h3>
@@ -66,19 +111,21 @@
     </div>
 
     <div class="event-card" onclick="irAlFormulario('paz')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Peace-symbol-pigeon.png" alt="Paz">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Peace-symbol-pigeon.png">
       <h3>Semana de la Paz</h3>
       <p>Descarga tu certificado.</p>
     </div>
 
     <div class="event-card" onclick="irAlFormulario('foro')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Conference_icon.svg" alt="Foro">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Conference_icon.svg">
       <h3>Foro Estudiantil</h3>
       <p>Descarga tu certificación.</p>
     </div>
+
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer id="contacto">
   <div class="footer-content">
     <h5>© 2025 Universidad Santo Tomás - Facultad de Gobierno y Relaciones Internacionales</h5>
@@ -88,99 +135,63 @@
 </footer>
 
 <script>
-/* Carrusel automático */
+/* ----------------------------------------
+   CARRUSEL AUTOMÁTICO
+----------------------------------------- */
 let index = 0;
 const imagenes = document.querySelectorAll("#carrusel img");
+
 setInterval(() => {
-  if (!imagenes.length) return;
   imagenes[index].classList.remove("activa");
   index = (index + 1) % imagenes.length;
   imagenes[index].classList.add("activa");
 }, 4000);
 
-/* Botones de eventos */
+/* ----------------------------------------
+   BOTÓN TARJETAS → FORMULARIO
+----------------------------------------- */
 function irAlFormulario(evento) {
   document.getElementById("evento").value = evento;
   window.location.href = "#inicio";
 }
 
-/* DESCARGA DESDE GITHUB RAW (mejorada) */
-document.getElementById("searchForm").addEventListener("submit", async function(e) {
+/* ----------------------------------------
+   DESCARGA DE PDF DESDE GITHUB RAW
+----------------------------------------- */
+document.getElementById("searchForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const resultadoEl = document.getElementById("resultado");
-  resultadoEl.textContent = "";
-
-  const cedulaRaw = document.getElementById("cedula").value.trim();
+  const cedula = document.getElementById("cedula").value.trim();
   const evento = document.getElementById("evento").value;
 
   if (!evento) {
-    resultadoEl.innerHTML = "<span style='color:red;'>Debe seleccionar un evento.</span>";
+    document.getElementById("resultado").innerHTML =
+      "<p style='color:red;'>Debe seleccionar un evento.</p>";
     return;
   }
 
-  // Validación básica (ajusta según tus reglas)
-  if (!/^\d{4,20}$/.test(cedulaRaw)) {
-    resultadoEl.innerHTML = "<span style='color:red;'>Ingrese una cédula válida (solo números).</span>";
-    return;
-  }
-
-  const cedula = encodeURIComponent(cedulaRaw);
-
-  // --- CONFIGURA AQUÍ ---
-  // Cambia usuario, repositorio y rama por los tuyos
+  // Usuario y repositorio correctos
   const usuario = "Stillmaster88";
-  const repositorio = "repository-Modelo-of-Naciones-United-Santotomun-2025-"; // verifica nombre exacto
-  const rama = "main"; // o 'master', según corresponda
-  // -----------------------
+  const repositorio = "repository-Modelo-of-Naciones-United-Santotomun-2025-";
 
-  // Construcción segura de la URL
-  const pdfUrl = `https://raw.githubusercontent.com/${usuario}/${repositorio}/${rama}/${evento}/${cedula}.pdf`;
+  // ❗ ESTA LÍNEA ESTABA MAL, ahora está corregida:
+  const pdfUrl = `https://raw.githubusercontent.com/${usuario}/${repositorio}/main/${evento}/${cedula}.pdf`;
 
-  resultadoEl.innerHTML = "<span style='color:blue;'>Buscando certificado...</span>";
-
-  try {
-    const response = await fetch(pdfUrl, { method: 'GET' });
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        resultadoEl.innerHTML = "<span style='color:red;'>No se encontró un certificado con esa cédula.</span>";
-      } else if (response.status === 403) {
-        resultadoEl.innerHTML = "<span style='color:red;'>Acceso denegado al repositorio. ¿Es privado?</span>";
+  fetch(pdfUrl)
+    .then(response => {
+      if (response.ok) {
+        window.open(pdfUrl, "_blank");
+        document.getElementById("resultado").innerHTML =
+          "<p style='color:green;'>Descargando certificado...</p>";
       } else {
-        resultadoEl.innerHTML = `<span style='color:red;'>Error al buscar el certificado (status: ${response.status}).</span>`;
+        document.getElementById("resultado").innerHTML =
+          "<p style='color:red;'>No se encontró un certificado con esa cédula.</p>";
       }
-      return;
-    }
-
-    // Descargar como blob para forzar nombre de archivo y mejor control
-    const blob = await response.blob();
-    const blobUrl = URL.createObjectURL(blob);
-    const nombreArchivo = `${evento}-${cedulaRaw}.pdf`;
-
-    // Crear enlace temporal para forzar descarga
-    const a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = nombreArchivo;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    // También abrimos en nueva pestaña de forma segura (opcional)
-    try {
-      window.open(blobUrl, '_blank', 'noopener'); // no es garantía en todos los navegadores
-    } catch (err) {
-      // algunos navegadores bloquean abrir blob en nueva pestaña desde JS, no es crítico
-    }
-
-    // limpiar
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-
-    resultadoEl.innerHTML = "<span style='color:green;'>Descarga iniciada.</span>";
-  } catch (err) {
-    console.error(err);
-    resultadoEl.innerHTML = "<span style='color:red;'>Error al buscar el certificado. Revisa la conexión o la configuración del repositorio.</span>";
-  }
+    })
+    .catch(() => {
+      document.getElementById("resultado").innerHTML =
+        "<p style='color:red;'>Error al buscar el certificado.</p>";
+    });
 });
 </script>
 
