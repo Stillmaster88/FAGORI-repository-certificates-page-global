@@ -155,7 +155,9 @@ function irAlFormulario(evento) {
   window.location.href = "#inicio";
 }
 
-/* DESCARGA DE PDF DESDE DOS REPOSITORIOS */
+/* ----------------------------------------
+   DESCARGA DESDE DOS REPOSITORIOS
+----------------------------------------- */
 document.getElementById("searchForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -168,13 +170,11 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
     return;
   }
 
-  // Repositorios que contienen certificados del MISMO evento
   const repositorios = [
-    "santotomun2025",        // repo principal
-    "santotomun2025-1"      // repo secundario
+    "santotomun2025",
+    "santotomun2025-1"
   ];
 
-  // Función que prueba repos uno por uno
   function buscarEnRepositorio(index) {
     if (index >= repositorios.length) {
       document.getElementById("resultado").innerHTML =
@@ -184,22 +184,22 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
 
     const pdfUrl = `https://stillmaster88.github.io/${repositorios[index]}/${cedula}.pdf`;
 
-    fetch(pdfUrl).then(response => {
-      if (response.ok) {
-        window.open(pdfUrl, "_blank");
-        document.getElementById("resultado").innerHTML =
-          "<p style='color:green;'>Descargando certificado...</p>";
-      } else {
-        buscarEnRepositorio(index + 1); // probar siguiente repo
-      }
-    })
-    .catch(() => {
-      buscarEnRepositorio(index + 1); // si hay error, sigue buscando
-    });
+    fetch(pdfUrl)
+      .then(response => {
+        if (response.ok) {
+          window.open(pdfUrl, "_blank");
+          document.getElementById("resultado").innerHTML =
+            "<p style='color:green;'>Descargando certificado...</p>";
+        } else {
+          buscarEnRepositorio(index + 1);
+        }
+      })
+      .catch(() => buscarEnRepositorio(index + 1));
   }
 
-  // Inicia la búsqueda en el primer repositorio
   buscarEnRepositorio(0);
 });
+</script>
 
-
+</body>
+</html>
