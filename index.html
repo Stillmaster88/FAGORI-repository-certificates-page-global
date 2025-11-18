@@ -189,7 +189,7 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
         if (response.ok) {
           window.open(pdfUrl, "_blank");
           document.getElementById("resultado").innerHTML =
-            "<p style='color:green;'>Descargando certificado...</p>";
+            "<p style='color:green;'>Visualizando certificado...</p>";
         } else {
           buscarEnRepositorio(index + 1);
         }
@@ -203,3 +203,4 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
 
 </body>
 </html>
+
