@@ -7,145 +7,184 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* Logo del header */
+    /* Logo */
     header .logo {
       width: 180px !important;
       height: auto !important;
-      max-width: none !important;
-      display: inline-block;
     }
 
-    /* Logos en tarjetas */
+    /* Tarjetas */
     .event-card img {
       width: 80%;
-      max-width: 250px;
-      height: 220px;
+      max-width: 230px;
+      height: 200px;
       object-fit: contain;
     }
 
     /* Carrusel */
-    .slider-container {
+    #carrusel {
       width: 100%;
-      max-height: 350px;
+      height: 280px;
       overflow: hidden;
       position: relative;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
-    .slider-container img {
+
+    #carrusel img {
       width: 100%;
-      height: 350px;
+      height: 100%;
       object-fit: cover;
       position: absolute;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
-    .slider-container img.active {
+
+    #carrusel img.activa {
       opacity: 1;
     }
   </style>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/44/Escudo_Universidad_Santo_Tom%C3%A1s.png">
-
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo-container"> 
-      <img src="logo_santoto_bogota1.png" alt="Logo Santoto" class="logo">
-      <h1>Facultad de Gobierno y Relaciones Internacionales</h1>
-    </div>
-    <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#eventos">Eventos</a>
-      <a href="#certificados">Certificados</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-  </header>
-
-
-  <!-- CARRUSEL GLOBAL DE IMÁGENES -->
-  <!-- Aquí puedes agregar todas las imágenes que quieras -->
-  <div class="slider-container">
-    <img src="slides/photo_santoto1.jpg" class="active">
-    <img src="slides/photo_santoto2.jpg">
-    <img src="slides/photo_santoto3.jpg">
+<header>
+  <div class="logo-container">
+    <img src="logos/logo_santoto_bogota1.png" alt="Logo Santoto" class="logo">
+    <h1>Facultad de Gobierno y Relaciones Internacionales</h1>
   </div>
-  <!-- FIN DEL CARRUSEL -->
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#eventos">Eventos</a>
+    <a href="#certificados">Certificados</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
 
+<!-- ESPACIO PARA CARRUSEL GLOBAL -->
+<section id="carrusel">
+  <!-- Agregue aquí las imágenes que quiera rotar -->
+  <img src="imagenes/imagen1.jpg" class="activa">
+  <img src="imagenes/imagen2.jpg">
+  <img src="imagenes/imagen3.jpg">
+</section>
 
+<section id="inicio" class="hero">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h2>Consulta y descarga tus certificados</h2>
+    <p>Verifica tu participación en los eventos institucionales de la Facultad.</p>
 
-  <!-- SECCIÓN INICIO -->
-  <section id="inicio" class="hero">
-    <div class="overlay"></div>
-    <div class="hero-content">
-      <h2>Consulta y descarga tus certificados</h2>
-      <p>Verifica tu participación en los eventos institucionales de la Facultad.</p>
+    <form id="searchForm">
+      <input type="text" id="cedula" placeholder="Ingresa tu número de cédula" required>
+      <select id="evento">
+        <option value="">Seleccione un evento</option>
+        <option value="santotomun">SantoToMUN 2025</option>
+        <option value="paz">Semana de la Paz</option>
+        <option value="foro">Foro Estudiantil</option>
+      </select>
 
-      <!-- FORMULARIO DE CONSULTA -->
-      <form id="searchForm">
-        <input type="text" id="cedula" placeholder="Ingresa tu número de cédula" required>
+      <button type="submit">Descargar certificado</button>
+    </form>
 
-        <select id="evento" required>
-          <option value="">Selecciona un evento</option>
-          <option value="santotomun">SantoToMUN 2025</option>
-          <option value="paz">Semana de la Paz</option>
-          <option value="foro">Foro Estudiantil</option>
-        </select>
+    <div id="resultado"></div>
+  </div>
+</section>
 
-        <button type="submit">Buscar certificado</button>
-      </form>
+<section id="eventos" class="eventos">
+  <h2>Certificados por evento</h2>
+  <div class="event-grid">
 
-      <div id="resultado"></div>
+    <div class="event-card" onclick="irAlFormulario('santotomun')">
+      <img src="logos/logo_santotomun.png" alt="Modelo ONU">
+      <h3>SantoToMUN 2025</h3>
+      <p>Descarga tu certificado.</p>
     </div>
-  </section>
 
-
-
-  <!-- SECCIÓN EVENTOS -->
-  <section id="eventos" class="eventos">
-    <h2>Certificados por evento</h2>
-
-    <div class="event-grid">
-
-      <div class="event-card" onclick="seleccionarEvento('santotomun')">
-        <img src="logo_santotomun.png" alt="Modelo ONU">
-        <h3>Modelo de Naciones Unidas SantoToMUN 2025</h3>
-        <p>Descarga tu certificado del Modelo de Naciones Unidas SantoToMUN 2025.</p>
-      </div>
-
-      <div class="event-card" onclick="seleccionarEvento('paz')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Peace-symbol-pigeon.png" alt="Semana de la Paz">
-        <h3>Semana de la Paz</h3>
-        <p>Certificados de participación en la Semana por la Paz.</p>
-      </div>
-
-      <div class="event-card" onclick="seleccionarEvento('foro')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Conference_icon.svg" alt="Foro Estudiantil">
-        <h3>Foro Estudiantil</h3>
-        <p>Reconocimiento a la participación en debates y foros.</p>
-      </div>
-
+    <div class="event-card" onclick="irAlFormulario('paz')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Peace-symbol-pigeon.png">
+      <h3>Semana de la Paz</h3>
+      <p>Certificados disponibles.</p>
     </div>
-  </section>
 
-
-
-  <!-- FOOTER -->
-  <footer id="contacto">
-    <div class="footer-content">
-      <p><h5>© 2025 Universidad Santo Tomás - Facultad de Gobierno y Relaciones Internacionales</p>
-      <p>Desarrollado por Stiven Dominguez — Secretario Académico</p>
-      <p>correo: secre.fagori@usta.edu.co</h5></p>
+    <div class="event-card" onclick="irAlFormulario('foro')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Conference_icon.svg">
+      <h3>Foro Estudiantil</h3>
+      <p>Descarga tu certificación.</p>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="footer-content">
+    <p><h5>© 2025 Universidad Santo Tomás - Facultad de Gobierno y Relaciones Internacionales</h5></p>
+    <p>Desarrollado por Stiven Dominguez — Secretario Académico</p>
+    <p>Correo: secre.fagori@usta.edu.co</p>
+  </div>
+</footer>
+
+<script>
+/* ---------------------
+   CARRUSEL AUTOMÁTICO
+------------------------*/
+let index = 0;
+const imagenes = document.querySelectorAll("#carrusel img");
+
+setInterval(() => {
+  imagenes[index].classList.remove("activa");
+  index = (index + 1) % imagenes.length;
+  imagenes[index].classList.add("activa");
+}, 4000);
+
+/* ---------------------
+   BOTONES DE EVENTOS
+------------------------*/
+function irAlFormulario(evento) {
+  document.getElementById("evento").value = evento;
+  window.location.href = "#inicio";
+}
+
+/* ---------------------
+   DESCARGA DESDE GITHUB RAW
+------------------------*/
+document.getElementById("searchForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const cedula = document.getElementById("cedula").value.trim();
+  const evento = document.getElementById("evento").value;
+
+  if (!evento) {
+    document.getElementById("resultado").innerHTML =
+      "<p style='color:red;'>Debe seleccionar un evento.</p>";
+    return;
+  }
+
+  // Cambie aquí su usuario y repositorio:
+  const usuario = "TuUsuario";
+  const repositorio = "certificados-fagori";
+
+  const pdfUrl =
+    `https://raw.githubusercontent.com/${usuario}/${repositorio}/main/${evento}/${cedula}.pdf`;
+
+  fetch(pdfUrl)
+    .then(response => {
+      if (response.ok) {
+        window.open(pdfUrl, "_blank");
+        document.getElementById("resultado").innerHTML =
+          "<p style='color:green;'>Descargando certificado...</p>";
+      } else {
+        document.getElementById("resultado").innerHTML =
+          "<p style='color:red;'>No se encontró un certificado con esa cédula.</p>";
+      }
+    })
+    .catch(() => {
+      document.getElementById("resultado").innerHTML =
+        "<p style='color:red;'>Error al buscar el certificado.</p>";
+    });
+});
+</script>
 
 </body>
 </html>
-
-
-
-
