@@ -172,7 +172,25 @@ setInterval(() => {
 }, 4000);
 
 /* SEGUNDO CARRUSEL */
+/* Fondo dinámico para la sección central */
+const fondosHero = [
+  "photo_santoto1.jpg",
+  "photo_santoto4.jpg",
+  "photo_santoto5.jpg",
+  "photo_santoto6.JPG"
+];
 
+let heroIndex = 0;
+
+function cambiarFondoHero() {
+  const hero = document.querySelector(".hero");
+  hero.style.backgroundImage = `url("${fondosHero[heroIndex]}")`;
+
+  heroIndex = (heroIndex + 1) % fondosHero.length;
+}
+
+cambiarFondoHero();  
+setInterval(cambiarFondoHero, 5000);  
 /* ----------------------------------------
    BOTÓN TARJETAS → FORMULARIO
 ----------------------------------------- */
@@ -229,6 +247,7 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
 
 </body>
 </html>
+
 
 
 
