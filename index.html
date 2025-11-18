@@ -22,8 +22,8 @@
       object-fit: contain;
     }
 
-    /* Carrusel */
-    #carrusel {
+    /* Carruseles */
+    #carrusel, #carrusel2 {
       width: 100%;
       height: 280px;
       overflow: hidden;
@@ -31,7 +31,8 @@
       margin-bottom: 30px;
     }
 
-    #carrusel img {
+    #carrusel img,
+    #carrusel2 img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -40,13 +41,13 @@
       transition: opacity 1s ease-in-out;
     }
 
-    #carrusel img.activa {
+    #carrusel img.activa,
+    #carrusel2 img.activa {
       opacity: 1;
     }
   </style>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/44/Escudo_Universidad_Santo_Tom%C3%A1s.png">
 </head>
 
@@ -72,6 +73,13 @@
   <img src="photo_santoto2.jpg">
   <img src="photo_santoto3.jpg">
 </section>
+
+<!-- SEGUNDO CARRUSEL -->
+<section id="carrusel2">
+  <img src="photo_santoto4.jpg" class="activa">
+  <img src="photo_santoto5.jpg">
+  <img src="photo_santoto6.jpg">
+</section>   
 
 <!-- FORMULARIO -->
 <section id="inicio" class="hero">
@@ -136,7 +144,7 @@
 
 <script>
 /* ----------------------------------------
-   CARRUSEL AUTOMÁTICO
+  PRIMER CARRUSEL AUTOMÁTICO
 ----------------------------------------- */
 let index = 0;
 const imagenes = document.querySelectorAll("#carrusel img");
@@ -145,6 +153,16 @@ setInterval(() => {
   imagenes[index].classList.remove("activa");
   index = (index + 1) % imagenes.length;
   imagenes[index].classList.add("activa");
+}, 4000);
+
+/* SEGUNDO CARRUSEL */
+let index2 = 0;
+const imagenes2 = document.querySelectorAll("#carrusel2 img");
+
+setInterval(() => {
+  imagenes2[index2].classList.remove("activa");
+  index2 = (index2 + 1) % imagenes2.length;
+  imagenes2[index2].classList.add("activa");
 }, 4000);
 
 /* ----------------------------------------
@@ -203,4 +221,5 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
 
 </body>
 </html>
+
 
